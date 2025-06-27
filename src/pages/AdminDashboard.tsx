@@ -11,25 +11,28 @@ import { Users, BarChart3, Shield, LogOut, Trophy } from "lucide-react";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const [selectedState, setSelectedState] = useState("Maharashtra");
+  const [selectedConstituency, setSelectedConstituency] = useState("Gandhinagar");
 
   const stats = [
-    { label: "Total Registered Voters", value: "45,000", icon: Users, color: "text-blue-600" },
-    { label: "Votes Cast", value: "31,500", icon: BarChart3, color: "text-green-600" },
+    { label: "Total Registered Voters", value: "85,000", icon: Users, color: "text-blue-600" },
+    { label: "Votes Cast", value: "59,500", icon: BarChart3, color: "text-green-600" },
     { label: "Participation Rate", value: "70%", icon: Users, color: "text-purple-600" },
     { label: "Security Status", value: "Secure", icon: Shield, color: "text-green-600" }
   ];
 
   const electionResults = [
-    { name: "Alex Johnson", votes: 14175, party: "Democratic", color: "#3b82f6" },
-    { name: "Sarah Williams", votes: 11025, party: "Republican", color: "#ef4444" },
-    { name: "Michael Chen", votes: 6300, party: "Independent", color: "#f59e0b" }
+    { name: "Rajesh Patel", votes: 23800, party: "BJP", color: "#ff9933" },
+    { name: "Priya Shah", votes: 19040, party: "INC", color: "#19AAED" },
+    { name: "Amit Mehta", votes: 11900, party: "AAP", color: "#0066CC" },
+    { name: "Kavita Desai", votes: 4760, party: "Independent", color: "#f59e0b" }
   ];
 
-  const stateComparison = [
-    { state: "Maharashtra", participation: 45 },
-    { state: "National Avg", participation: 35 },
-    { state: "Target", participation: 20 }
+  const constituencyComparison = [
+    { constituency: "Gandhinagar", participation: 70 },
+    { constituency: "Ahmedabad East", participation: 65 },
+    { constituency: "Vadodara", participation: 72 },
+    { constituency: "Surat", participation: 68 },
+    { constituency: "Rajkot", participation: 75 }
   ];
 
   const chartConfig = {
@@ -53,8 +56,8 @@ const AdminDashboard = () => {
               <Shield className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-semibold text-gray-900">Admin Dashboard</h1>
-              <p className="text-sm text-gray-600">Election Analytics & Results</p>
+              <h1 className="text-xl font-semibold text-gray-900">Gujarat Election Commission Dashboard</h1>
+              <p className="text-sm text-gray-600">Gujarat State Election Analytics & Results</p>
             </div>
           </div>
           <Button variant="outline" onClick={() => navigate("/")}>
@@ -65,25 +68,27 @@ const AdminDashboard = () => {
       </div>
 
       <div className="p-6">
-        {/* State Selection */}
+        {/* Constituency Selection */}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
               <BarChart3 className="w-5 h-5" />
-              <span>State-wise Analysis</span>
+              <span>Constituency-wise Analysis</span>
             </CardTitle>
-            <CardDescription>Select a state to view detailed voting statistics</CardDescription>
+            <CardDescription>Select a constituency to view detailed voting statistics</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="w-64">
-              <Select value={selectedState} onValueChange={setSelectedState}>
+              <Select value={selectedConstituency} onValueChange={setSelectedConstituency}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Maharashtra">Maharashtra</SelectItem>
-                  <SelectItem value="Karnataka">Karnataka</SelectItem>
-                  <SelectItem value="Tamil Nadu">Tamil Nadu</SelectItem>
+                  <SelectItem value="Gandhinagar">Gandhinagar</SelectItem>
+                  <SelectItem value="Ahmedabad East">Ahmedabad East</SelectItem>
+                  <SelectItem value="Vadodara">Vadodara</SelectItem>
+                  <SelectItem value="Surat">Surat</SelectItem>
+                  <SelectItem value="Rajkot">Rajkot</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -97,12 +102,12 @@ const AdminDashboard = () => {
               <div className="flex items-center space-x-4">
                 <Trophy className="w-8 h-8 text-yellow-600" />
                 <div>
-                  <h3 className="text-lg font-semibold text-green-900">Leading in {selectedState}</h3>
-                  <p className="text-green-800">Alex Johnson (Democratic Party)</p>
-                  <p className="text-sm text-green-700">14,175 votes (45%)</p>
+                  <h3 className="text-lg font-semibold text-green-900">Leading in {selectedConstituency}</h3>
+                  <p className="text-green-800">Rajesh Patel (Bharatiya Janata Party)</p>
+                  <p className="text-sm text-green-700">23,800 votes (40%)</p>
                 </div>
               </div>
-              <Badge className="bg-green-600">45% of votes</Badge>
+              <Badge className="bg-green-600">40% of votes</Badge>
             </div>
           </CardContent>
         </Card>
@@ -129,8 +134,8 @@ const AdminDashboard = () => {
           {/* Election Results Chart */}
           <Card>
             <CardHeader>
-              <CardTitle>{selectedState} Election Results</CardTitle>
-              <CardDescription>Vote breakdown for {selectedState}</CardDescription>
+              <CardTitle>{selectedConstituency} Election Results</CardTitle>
+              <CardDescription>Vote breakdown for {selectedConstituency} constituency</CardDescription>
             </CardHeader>
             <CardContent>
               <ChartContainer config={chartConfig} className="h-[300px]">
@@ -147,18 +152,18 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
 
-          {/* State Comparison Chart */}
+          {/* Constituency Comparison Chart */}
           <Card>
             <CardHeader>
-              <CardTitle>National vs {selectedState}</CardTitle>
-              <CardDescription>Comparison with national averages</CardDescription>
+              <CardTitle>Gujarat Constituencies Comparison</CardTitle>
+              <CardDescription>Voter participation across major constituencies</CardDescription>
             </CardHeader>
             <CardContent>
               <ChartContainer config={chartConfig} className="h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={stateComparison}>
+                  <BarChart data={constituencyComparison}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="state" />
+                    <XAxis dataKey="constituency" tick={{ fontSize: 10 }} />
                     <YAxis />
                     <ChartTooltip content={<ChartTooltipContent />} />
                     <Bar dataKey="participation" fill="#10b981" />

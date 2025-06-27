@@ -23,15 +23,16 @@ const VoteConfirmation = () => {
           <CardContent className="space-y-6">
             {/* Election Details */}
             <div className="text-center">
-              <h3 className="font-semibold text-gray-900 mb-2">Presidential Election 2024</h3>
+              <h3 className="font-semibold text-gray-900 mb-2">Gujarat Legislative Assembly Election 2024</h3>
+              <p className="text-sm text-gray-600">Gandhinagar Constituency</p>
             </div>
 
             {/* Selected Candidate */}
             <Card className="border-2 border-blue-200">
               <CardContent className="p-4 text-center">
-                <div className="text-4xl mb-2">🏛️</div>
-                <h4 className="font-bold text-gray-900">Sarah Williams</h4>
-                <p className="text-gray-600">Republican Party</p>
+                <div className="text-4xl mb-2">🦁</div>
+                <h4 className="font-bold text-gray-900">Rajesh Patel</h4>
+                <p className="text-gray-600">Bharatiya Janata Party (BJP)</p>
               </CardContent>
             </Card>
 
@@ -43,7 +44,7 @@ const VoteConfirmation = () => {
                   <div>
                     <h4 className="font-semibold text-yellow-800 mb-1">Security Notice</h4>
                     <p className="text-yellow-700 text-sm">
-                      This action cannot be undone. Your vote will be encrypted and stored securely.
+                      This action cannot be undone. Your vote will be encrypted and stored securely in Gujarat ECI system.
                     </p>
                   </div>
                 </div>

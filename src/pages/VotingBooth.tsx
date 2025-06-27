@@ -12,20 +12,26 @@ const VotingBooth = () => {
 
   const candidates = [
     {
-      id: "alex-johnson",
-      name: "Alex Johnson",
-      party: "Democratic Party",
-      symbol: "🇺🇸"
+      id: "rajesh-patel",
+      name: "Rajesh Patel",
+      party: "Bharatiya Janata Party (BJP)",
+      symbol: "🦁"
     },
     {
-      id: "sarah-williams",
-      name: "Sarah Williams",
-      party: "Republican Party",
+      id: "priya-shah",
+      name: "Priya Shah",
+      party: "Indian National Congress (INC)",
       symbol: "🏛️"
     },
     {
-      id: "michael-chen",
-      name: "Michael Chen",
+      id: "amit-mehta",
+      name: "Amit Mehta",
+      party: "Aam Aadmi Party (AAP)",
+      symbol: "🌾"
+    },
+    {
+      id: "kavita-desai",
+      name: "Kavita Desai",
       party: "Independent",
       symbol: "⭐"
     }
@@ -49,7 +55,7 @@ const VotingBooth = () => {
           <div className="flex items-center space-x-3">
             <Shield className="w-6 h-6 text-blue-600" />
             <div>
-              <h1 className="text-xl font-semibold text-gray-900">Secure Voting Booth</h1>
+              <h1 className="text-xl font-semibold text-gray-900">Gujarat Secure Voting Booth</h1>
               <p className="text-sm text-blue-600">Your vote is private and encrypted</p>
             </div>
           </div>
@@ -61,11 +67,11 @@ const VotingBooth = () => {
         <Card className="mb-8">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle>Presidential Election 2024</CardTitle>
-              <Badge className="bg-gray-900">Federal</Badge>
+              <CardTitle>Gujarat Legislative Assembly Election 2024</CardTitle>
+              <Badge className="bg-orange-600">Gujarat State</Badge>
             </div>
             <CardDescription>
-              Vote for the next President of the United States
+              Vote for your MLA representative in Gandhinagar constituency
             </CardDescription>
           </CardHeader>
         </Card>
@@ -86,7 +92,7 @@ const VotingBooth = () => {
         </Card>
 
         {/* Candidates */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {candidates.map((candidate) => (
             <Card 
               key={candidate.id}

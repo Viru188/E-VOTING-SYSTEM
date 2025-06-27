@@ -11,33 +11,33 @@ const VoterDashboard = () => {
   const elections = [
     {
       id: 1,
-      title: "Presidential Election 2024",
-      description: "Vote for the next President of the United States",
-      type: "Federal",
-      candidates: 3,
-      deadline: "November 5, 2024",
+      title: "Gujarat Legislative Assembly Election 2024",
+      description: "Vote for your MLA representative in Gujarat Assembly",
+      type: "State",
+      candidates: 4,
+      deadline: "December 15, 2024",
       status: "active",
-      symbols: ["🇺🇸", "🏛️", "⭐"]
+      symbols: ["🦁", "🏛️", "🌸", "⭐"]
     },
     {
       id: 2,
-      title: "Congressional District 5",
-      description: "Choose your representative in Congress",
+      title: "Lok Sabha - Ahmedabad East",
+      description: "Choose your Member of Parliament for Ahmedabad East constituency",
       type: "Federal",
-      candidates: 2,
-      deadline: "November 5, 2024",
+      candidates: 3,
+      deadline: "May 20, 2024",
       status: "active",
-      symbols: ["🇺🇸"]
+      symbols: ["🇮🇳", "🏛️", "🌾"]
     },
     {
       id: 3,
-      title: "Mayor Election",
-      description: "Select your city mayor",
+      title: "Gandhinagar Municipal Corporation",
+      description: "Select your local municipal representative",
       type: "Local",
-      candidates: 3,
-      deadline: "November 12, 2024",
+      candidates: 5,
+      deadline: "January 10, 2025",
       status: "active",
-      symbols: ["🏛️", "🟦", "⭐"]
+      symbols: ["🏛️", "🟦", "⭐", "🌸", "🦁"]
     }
   ];
 
@@ -57,8 +57,8 @@ const VoterDashboard = () => {
               <Users className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-semibold text-gray-900">Voter Dashboard</h1>
-              <p className="text-sm text-gray-600">Voter ID: #VT2024-001</p>
+              <h1 className="text-xl font-semibold text-gray-900">Gujarat Voter Dashboard</h1>
+              <p className="text-sm text-gray-600">Voter ID: #GJ2024-001 | Constituency: Gandhinagar</p>
             </div>
           </div>
           <Button variant="outline" onClick={() => navigate("/")}>
@@ -88,7 +88,7 @@ const VoterDashboard = () => {
 
         {/* Available Elections */}
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Available Elections</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Available Elections in Gujarat</h2>
           <div className="grid gap-6">
             {elections.map((election) => (
               <Card key={election.id} className="hover:shadow-md transition-shadow">
@@ -98,8 +98,8 @@ const VoterDashboard = () => {
                       <CardTitle className="flex items-center space-x-3">
                         <span>{election.title}</span>
                         <Badge 
-                          variant={election.type === "Federal" ? "default" : "secondary"}
-                          className={election.type === "Federal" ? "bg-gray-900" : ""}
+                          variant={election.type === "Federal" ? "default" : election.type === "State" ? "secondary" : "outline"}
+                          className={election.type === "Federal" ? "bg-gray-900" : election.type === "State" ? "bg-orange-600" : ""}
                         >
                           {election.type}
                         </Badge>
