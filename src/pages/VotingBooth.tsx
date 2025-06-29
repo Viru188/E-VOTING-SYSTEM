@@ -1,14 +1,22 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Shield, CheckCircle } from "lucide-react";
+import { ArrowLeft, Shield, CheckCircle, MapPin } from "lucide-react";
 
 const VotingBooth = () => {
   const navigate = useNavigate();
   const [selectedCandidate, setSelectedCandidate] = useState<string | null>(null);
+  const [hasVoted, setHasVoted] = useState(false);
+
+  useEffect(() => {
+    const votingStatus = localStorage.getItem("gujaratVotingStatus");
+    if (votingStatus === "completed") {
+      setHasVoted(true);
+    }
+  }, []);
 
   const candidates = [
     {
@@ -38,25 +46,50 @@ const VotingBooth = () => {
   ];
 
   const handleCastVote = () => {
+    if (hasVoted) {
+      alert("તમે પહેલેથી જ મત આપ્યો છે! You have already voted!");
+      return;
+    }
     if (selectedCandidate) {
       navigate("/vote-confirmation");
     }
   };
 
+  if (hasVoted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-green-50 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md text-center">
+          <CardHeader>
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle className="w-8 h-8 text-green-600" />
+            </div>
+            <CardTitle className="text-green-800">મત પહેલેથી આપવામાં આવ્યો છે</CardTitle>
+            <CardDescription>You have already cast your vote</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button onClick={() => navigate("/voter-dashboard")} className="bg-orange-600 hover:bg-orange-700">
+              ડેશબોર્ડ પર પાછા જાઓ
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-green-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4">
+      <div className="bg-white border-b-2 border-orange-200 px-6 py-4">
         <div className="flex items-center space-x-4">
           <Button variant="ghost" onClick={() => navigate("/voter-dashboard")}>
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
+            પાછા
           </Button>
           <div className="flex items-center space-x-3">
-            <Shield className="w-6 h-6 text-blue-600" />
+            <Shield className="w-6 h-6 text-orange-600" />
             <div>
               <h1 className="text-xl font-semibold text-gray-900">Gujarat Secure Voting Booth</h1>
-              <p className="text-sm text-blue-600">Your vote is private and encrypted</p>
+              <p className="text-sm text-orange-600">તમારો મત ખાનગી અને એન્ક્રિપ્ટેડ છે</p>
             </div>
           </div>
         </div>
@@ -64,27 +97,28 @@ const VotingBooth = () => {
 
       <div className="p-6 max-w-4xl mx-auto">
         {/* Election Info */}
-        <Card className="mb-8">
-          <CardHeader>
+        <Card className="mb-8 border-2 border-orange-200">
+          <CardHeader className="bg-gradient-to-r from-orange-100 to-green-100">
             <div className="flex items-center justify-between">
-              <CardTitle>Gujarat Legislative Assembly Election 2024</CardTitle>
+              <CardTitle className="text-orange-800">Gujarat Legislative Assembly Election 2024</CardTitle>
               <Badge className="bg-orange-600">Gujarat State</Badge>
             </div>
-            <CardDescription>
-              Vote for your MLA representative in Gandhinagar constituency
+            <CardDescription className="flex items-center space-x-2">
+              <MapPin className="w-4 h-4 text-gray-600" />
+              <span>Gandhinagar constituency માં તમારા MLA પ્રતિનિધિ માટે મત આપો</span>
             </CardDescription>
           </CardHeader>
         </Card>
 
         {/* Voting Instructions */}
-        <Card className="mb-8 border-blue-200 bg-blue-50">
+        <Card className="mb-8 border-orange-200 bg-orange-50">
           <CardContent className="p-6">
             <div className="flex items-start space-x-3">
-              <Shield className="w-5 h-5 text-blue-600 mt-0.5" />
+              <Shield className="w-5 h-5 text-orange-600 mt-0.5" />
               <div>
-                <h3 className="font-semibold text-blue-900 mb-1">Voting Instructions</h3>
-                <p className="text-blue-800 text-sm">
-                  Select one candidate by clicking on their card. Review your choice and click "Cast Vote" to submit.
+                <h3 className="font-semibold text-orange-900 mb-1">મતદાન સૂચનાઓ (Voting Instructions)</h3>
+                <p className="text-orange-800 text-sm">
+                  તેમના કાર્ડ પર ક્લિક કરીને એક ઉમેદવાર પસંદ કરો. તમારી પસંદગીની સમીક્ષા કરો અને સબમિટ કરવા માટે "Cast Vote" પર ક્લિક કરો.
                 </p>
               </div>
             </div>
@@ -96,10 +130,10 @@ const VotingBooth = () => {
           {candidates.map((candidate) => (
             <Card 
               key={candidate.id}
-              className={`cursor-pointer transition-all hover:shadow-lg ${
+              className={`cursor-pointer transition-all hover:shadow-lg border-2 ${
                 selectedCandidate === candidate.id 
-                  ? "ring-2 ring-blue-500 border-blue-500" 
-                  : "hover:border-gray-300"
+                  ? "ring-2 ring-orange-500 border-orange-500 bg-orange-50" 
+                  : "hover:border-orange-300 border-gray-200"
               }`}
               onClick={() => setSelectedCandidate(candidate.id)}
             >
@@ -108,9 +142,9 @@ const VotingBooth = () => {
                 <h3 className="text-xl font-bold text-gray-900 mb-2">{candidate.name}</h3>
                 <p className="text-gray-600 mb-4">{candidate.party}</p>
                 {selectedCandidate === candidate.id && (
-                  <div className="flex items-center justify-center space-x-2 text-blue-600">
+                  <div className="flex items-center justify-center space-x-2 text-orange-600">
                     <CheckCircle className="w-5 h-5" />
-                    <span className="font-medium">Selected</span>
+                    <span className="font-medium">પસંદ કર્યું (Selected)</span>
                   </div>
                 )}
               </CardContent>
@@ -123,10 +157,10 @@ const VotingBooth = () => {
           <Button 
             onClick={handleCastVote}
             disabled={!selectedCandidate}
-            className="bg-blue-600 hover:bg-blue-700 px-8 py-3 text-lg"
+            className="bg-orange-600 hover:bg-orange-700 px-8 py-3 text-lg"
           >
             <Shield className="w-5 h-5 mr-2" />
-            Cast Your Vote
+            તમારો મત આપો (Cast Your Vote)
           </Button>
         </div>
       </div>
