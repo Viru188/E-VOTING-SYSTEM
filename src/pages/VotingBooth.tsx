@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,14 +8,24 @@ import { ArrowLeft, Shield, CheckCircle, MapPin } from "lucide-react";
 const VotingBooth = () => {
   const navigate = useNavigate();
   const [selectedCandidate, setSelectedCandidate] = useState<string | null>(null);
-  const [hasVoted, setHasVoted] = useState(false);
+  const [currentElectionId, setCurrentElectionId] = useState<string | null>(null);
+  const [hasVotedInCurrentElection, setHasVotedInCurrentElection] = useState(false);
 
   useEffect(() => {
-    const votingStatus = localStorage.getItem("gujaratVotingStatus");
-    if (votingStatus === "completed") {
-      setHasVoted(true);
+    // Get current election ID
+    const electionId = localStorage.getItem("currentElectionId");
+    if (!electionId) {
+      navigate("/voter-dashboard");
+      return;
     }
-  }, []);
+    setCurrentElectionId(electionId);
+
+    // Check if user has voted in this specific election
+    const votedElections = JSON.parse(localStorage.getItem("gujaratVotedElections") || "[]");
+    if (votedElections.includes(electionId)) {
+      setHasVotedInCurrentElection(true);
+    }
+  }, [navigate]);
 
   const candidates = [
     {
@@ -46,16 +55,18 @@ const VotingBooth = () => {
   ];
 
   const handleCastVote = () => {
-    if (hasVoted) {
-      alert("તમે પહેલેથી જ મત આપ્યો છે! You have already voted!");
+    if (hasVotedInCurrentElection) {
+      alert("તમે આ ચૂંટણીમાં પહેલેથી જ મત આપ્યો છે! You have already voted in this election!");
       return;
     }
     if (selectedCandidate) {
+      // Store selected candidate for confirmation
+      localStorage.setItem("selectedCandidate", selectedCandidate);
       navigate("/vote-confirmation");
     }
   };
 
-  if (hasVoted) {
+  if (hasVotedInCurrentElection) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-green-50 flex items-center justify-center p-4">
         <Card className="w-full max-w-md text-center">
@@ -63,8 +74,8 @@ const VotingBooth = () => {
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="w-8 h-8 text-green-600" />
             </div>
-            <CardTitle className="text-green-800">મત પહેલેથી આપવામાં આવ્યો છે</CardTitle>
-            <CardDescription>You have already cast your vote</CardDescription>
+            <CardTitle className="text-green-800">આ ચૂંટણીમાં મત પહેલેથી આપવામાં આવ્યો છે</CardTitle>
+            <CardDescription>You have already cast your vote in this election</CardDescription>
           </CardHeader>
           <CardContent>
             <Button onClick={() => navigate("/voter-dashboard")} className="bg-orange-600 hover:bg-orange-700">
